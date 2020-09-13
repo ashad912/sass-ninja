@@ -1,0 +1,8 @@
+All SASS (.scss) files need to be converted to normal CSS
+We use SASS in application version whitch is Prepros
+
+Browsers cannot understand SASS!
+
+Multilevel nesting is not good idea! Hard to track open/close brackets.
+
+Float clearing using sudoclass :after :<
