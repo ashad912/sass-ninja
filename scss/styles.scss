@@ -1,17 +1,24 @@
-// Variables
-
-$deepBlue: #032f3e;
-$offWhite: #f8f9fb;
-$sectionHeading: 24px;
+// Modularization
+@import 'reset';
+@import 'variables';
+@import 'functions';
+@import 'extends';
+@import 'mixins';
 
 #main-nav {
 	background: $deepBlue;
+	//@include floatLeftListEqualy(6);
+	// Nested style
 	ul {
 		width: 100%;
+		@include clearFix;
 	}
 	li {
 		float: left;
-		width: 14%;
+		width: (100% / 6); // Things like this works: (40px + 20) -> 60px
+		@include mQ(600px) {
+			width: 100%;
+		}
 	}
 	a {
 		color: $offWhite;
@@ -19,16 +26,85 @@ $sectionHeading: 24px;
 		padding: 16px;
 		display: block;
 		text-align: center;
+		&:hover {
+			// #main-nav a:hover -> Using ampersant like 'this' context :D
+			background: lighten($deepBlue, 5); // Sass function to make color lighten!
+		}
 	}
 }
 
-#main-nav ul:after {
-	content: '';
-	display: block;
-	clear: both;
+// #main-nav ul:after {
+// 	content: '';
+// 	display: block;
+// 	clear: both;
+// }
+
+// Commented out to use @shared tag
+// section h1 {
+// 	@extend %section-shared;
+// }
+
+.lead-banner {
+	// Applying mixin!
+	@include banner;
+	text-align: right;
 }
 
-section h1 {
-	font-size: $sectionHeading;
-	color: $deepBlue;
+.lessons-banner {
+	@include banner;
+	li {
+		text-transform: uppercase;
+		font-size: 20px;
+		max-width: 500px;
+		margin: 60px 0;
+	}
+}
+
+#services {
+	//@include floatLeftListEqualy(3);
+	margin-bottom: 60px;
+	h1 {
+		@extend %section-shared;
+		margin-top: 20px;
+	}
+	#{&}-list {
+		// Output is -> #services-list
+		white-space: nowrap;
+	}
+	li {
+		//float: left;
+		//width: (100% / 3);
+		white-space: normal;
+		display: inline-block;
+		box-sizing: border-box;
+		text-align: center;
+	}
+	img {
+		width: 60%;
+		margin: 20px 20%;
+	}
+	a {
+		text-decoration: none;
+		color: $deepBlue;
+		font-weight: bold;
+		&:hover {
+			color: complement($deepBlue);
+		}
+	}
+	// ul {
+	// 	@include clearFix;
+	// }
+}
+
+#projects {
+	h1 {
+		@extend %section-shared;
+		margin-top: 15px;
+	}
+	li {
+		@include grid(4, 2%);
+		div {
+			width: 100%;
+		}
+	}
 }

@@ -1,0 +1,81 @@
+// Mixins
+
+@mixin banner {
+	width: 100%;
+	position: relative;
+	color: white;
+	.banner-content {
+		position: absolute;
+		top: 50px;
+		width: 100%;
+	}
+	img {
+		width: 100%;
+	}
+	span {
+		font-size: fontSize(bannerHeading);
+		display: block;
+		text-transform: uppercase;
+		font-weight: bold;
+		@include mQ(3000px, 1200px) {
+			font-size: 68px;
+		}
+	}
+	span.title {
+		font-weight: normal;
+		margin-bottom: 30px;
+	}
+}
+
+@mixin clearFix {
+	&:after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+}
+
+@mixin grid($cols, $mgn) {
+	float: left;
+	margin-right: $mgn;
+	margin-bottom: $mgn;
+	width: ((100% - (($cols - 1) * $mgn)) / $cols);
+	&:nth-child(#{$cols}n) {
+		margin-right: 0;
+	}
+}
+
+// Cool not used mixin
+//<- true by default
+@mixin theme($light-theme: true) {
+	@if $light-theme {
+		background: lighten($primary-color, 100%);
+		color: darken($text-color, 100%);
+	}
+}
+
+@mixin mQ($arg...) {
+	// Invertion of modern ES6 list of args syntax!
+	@if length($arg) == 1 {
+		// nth($arg, x) - x is number of argument from 1 (NOT FROM 0!) to length of args list.
+		@media screen and (max-width: nth($arg, 1)) {
+			@content; // Whatever we put inside the invokation, it goes here!
+		}
+	}
+	@if length($arg) == 2 {
+		@media screen and (max-width: nth($arg, 1)) and (min-width: nth($arg, 2)) {
+			@content; // Whatever we put inside the invokation, it goes here!
+		}
+	}
+}
+
+@mixin floatLeftListEqualy($elements) {
+	ul {
+		@include clearFix;
+	}
+
+	li {
+		float: left;
+		width: (100% / $elements);
+	}
+}
