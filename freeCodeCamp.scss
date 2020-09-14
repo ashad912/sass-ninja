@@ -1,0 +1,44 @@
+//Sass tutorial - freeCodeCamp -> https://www.youtube.com/watch?v=_a5j7KoflTs
+
+$primary-color: #272727;
+
+
+@function set-text-color($color) {
+    @if (lightness($color) > 40%){
+        @return #000;
+    } @else {
+        @return #fff;
+    }
+}
+
+// Great hack to animate each child with diffrent delay - great effect!
+@for $i from 1 through 4 {
+    .menu-nav__item:nth-child(#{$i}){
+        transition-delay: ($i + 0.1s) + 0.15s;
+    }
+}
+
+body {
+    color: set-text-color($primary-color)
+}
+
+.interestingStyles{
+    overflow: hidden; // No scroll
+    background: // Make linear gradient for background img
+        linear-gradient(
+            to right,
+            rgba($primary-color, 0.9),
+            rgba($primary-color, 0.3)
+        ),
+        url('../img/model-1.jpg') center top;
+    background-size: cover; // Resize the background image to cover the entire container, even if it has to stretch the image or cut a little bit off one of the edges
+    position: initial; // The initial keyword is used to set a CSS property to its default value. Even if parent element has different property value.
+
+    &::after{ // Used to do cool animations or copy elements
+        position: absolute;
+        top: 0;
+        opacity: 0.9;
+    }
+}
+
+    
